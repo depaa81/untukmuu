@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<title>Terima Kasih Sayang 🤍</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+body {
+  height: 100vh;
+  background: linear-gradient(135deg, #ff758c, #ff7eb3);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  color: white;
+  text-align: center;
+}
+
+.dark {
+  background: linear-gradient(135deg, #111, #333);
+}
+
+.card {
+  background: rgba(255,255,255,0.15);
+  backdrop-filter: blur(10px);
+  padding: 25px;
+  border-radius: 20px;
+  width: 90%;
+  max-width: 400px;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.25);
+  animation: fadeIn 1s ease;
+}
+
+.hidden { display: none; }
+
+h1 { margin-bottom: 10px; }
+p { line-height: 1.6; margin-bottom: 15px; }
+
+button {
+  border: none;
+  padding: 12px 20px;
+  border-radius: 30px;
+  background: white;
+  color: #ff5e8a;
+  font-size: 15px;
+  cursor: pointer;
+  margin: 5px;
+}
+
+input {
+  padding: 10px;
+  border-radius: 20px;
+  border: none;
+  width: 80%;
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+.heart {
+  position: fixed;
+  bottom: -20px;
+  animation: float 6s linear infinite;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes float {
+  to {
+    transform: translateY(-110vh) scale(1.5);
+    opacity: 0;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<!-- AUDIO (TIDAK AUTOPAUSE) -->
+<audio id="bgMusic">
+  <source src="penjaga hati.mp3" type="audio/mpeg">
+</audio>
+
+<!-- LOGIN -->
+<div class="card" id="login">
+  <h1>🔐 Pesan Khusus</h1>
+  <p>Masukkan kata sederhana kita 🤍</p>
+  <input type="password" id="pass" placeholder="Contoh: KITA">
+  <br>
+  <button onclick="checkPass()">Buka</button>
+</div>
+
+<!-- OPENING -->
+<div class="card hidden" id="opening">
+  <h1 id="greeting"></h1>
+  <p id="songName">🎵 Lagu: Penjaga Hati</p>
+  <p>
+    Aku bikin halaman kecil ini  
+    bukan buat hal besar,  
+    tapi buat satu hal sederhana.
+  </p>
+  <p><b>Mengucapkan terima kasih 🤍</b></p>
+
+  <button onclick="openGift()">Baca Pesan</button>
+  <br>
+  <button onclick="toggleMusic()" id="musicBtn">🎵 Putar Lagu</button>
+  <br>
+  <button onclick="toggleMode()">🌙 / ☀️</button>
+</div>
+
+<!-- GIFT -->
+<div class="card hidden" id="gift">
+  <h1>🤍 Terima Kasih 🤍</h1>
+
+  <p id="typing"></p>
+  <p id="countdown"></p>
+
+  <div class="card">
+    <h2>💌 Untuk Kamu</h2>
+    <p>
+      Terima kasih sudah bertahan,  
+      sudah sabar, dan tetap ada.  
+      Aku mungkin belum selalu sempurna,  
+      tapi aku sungguh menghargai kamu.
+    </p>
+  </div>
+
+  <p>🤍🤍🤍</p>
+  <button onclick="toggleMusic()" id="musicBtn2">🎵 Putar Lagu</button>
+</div>
+
+<script>
+// PASSWORD
+function checkPass() {
+  const pass = document.getElementById("pass").value;
+  if (pass === "KITA") {
+    document.getElementById("login").classList.add("hidden");
+    document.getElementById("opening").classList.remove("hidden");
+  } else {
+    alert("Belum tepat 🤍");
+  }
+}
+
+// OPEN MESSAGE (TIDAK SENTUH MUSIK)
+function openGift() {
+  document.getElementById("opening").classList.add("hidden");
+  document.getElementById("gift").classList.remove("hidden");
+  hearts();
+  typingEffect();
+}
+
+// HEART FLOAT
+function hearts() {
+  setInterval(() => {
+    const h = document.createElement("div");
+    h.className = "heart";
+    h.innerHTML = "🤍";
+    h.style.left = Math.random() * 100 + "vw";
+    h.style.fontSize = (Math.random() * 20 + 15) + "px";
+    document.body.appendChild(h);
+    setTimeout(() => h.remove(), 6000);
+  }, 400);
+}
+
+// TYPING EFFECT
+const text =
+"Terima kasih sudah hadir di hidup aku. " +
+"Terima kasih untuk waktu, perhatian, dan usaha kecil " +
+"yang mungkin sering tidak kamu sadari. " +
+"Aku benar-benar bersyukur punya kamu 🤍";
+
+let i = 0;
+function typingEffect() {
+  if (i < text.length) {
+    document.getElementById("typing").innerHTML += text.charAt(i);
+    i++;
+    setTimeout(typingEffect, 65);
+  }
+}
+
+// COUNTDOWN
+setInterval(() => {
+  const now = new Date();
+  const days = Math.floor((now - startDate) / (1000 * 60 * 60 * 24));
+  document.getElementById("countdown").innerText =
+    "Terima kasih sudah menemani aku selama " + days + " hari 🤍";
+}, 1000);
+
+// GREETING
+const hour = new Date().getHours();
+let greet = "Hai Sayang 🤍";
+if (hour < 12) greet = "Selamat pagi 🤍";
+else if (hour < 18) greet = "Selamat sore 🤍";
+else greet = "Selamat malam 🤍";
+document.getElementById("greeting").innerText = greet;
+
+// DARK MODE
+function toggleMode() {
+  document.body.classList.toggle("dark");
+}
+
+// MUSIC CONTROLLER (AMAN PINDAH HALAMAN)
+let isPlaying = false;
+function toggleMusic() {
+  const music = document.getElementById("bgMusic");
+  const btn1 = document.getElementById("musicBtn");
+  const btn2 = document.getElementById("musicBtn2");
+
+  if (!isPlaying) {
+    music.play();
+    isPlaying = true;
+    if (btn1) btn1.innerText = "⏸️ Pause Lagu";
+    if (btn2) btn2.innerText = "⏸️ Pause Lagu";
+  } else {
+    music.pause();
+    isPlaying = false;
+    if (btn1) btn1.innerText = "🎵 Putar Lagu";
+    if (btn2) btn2.innerText = "🎵 Putar Lagu";
+  }
+}
+
+// POPUP RANDOM
+const messages = [
+  "Terima kasih sudah bertahan 🤍",
+  "Aku menghargai kamu",
+  "Makasih sudah selalu ada",
+  "Aku bersyukur punya kamu 🤍"
+];
+
+setInterval(() => {
+  alert(messages[Math.floor(Math.random() * messages.length)]);
+}, 30000);
+</script>
+
+</body>
+    </html>
