@@ -2,245 +2,251 @@
 <html lang="id">
 <head>
 <meta charset="UTF-8">
-<title>Terima Kasih Sayang 🤍</title>
+<title>Untuk Kamu 💖</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: 'Segoe UI', sans-serif;
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:'Poppins', sans-serif;
 }
 
-body {
-  height: 100vh;
-  background: linear-gradient(135deg, #ff758c, #ff7eb3);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  overflow: hidden;
-  color: white;
-  text-align: center;
+body{
+  height:100vh;
+  overflow:hidden;
+  background: linear-gradient(135deg,#ff758c,#ff7eb3,#ffc3d8);
+  display:flex;
+  justify-content:center;
+  align-items:center;
 }
 
-.dark {
-  background: linear-gradient(135deg, #111, #333);
-}
-
-.card {
-  background: rgba(255,255,255,0.15);
-  backdrop-filter: blur(10px);
-  padding: 25px;
-  border-radius: 20px;
-  width: 90%;
-  max-width: 400px;
-  box-shadow: 0 20px 40px rgba(0,0,0,0.25);
-  animation: fadeIn 1s ease;
-}
-
-.hidden { display: none; }
-
-h1 { margin-bottom: 10px; }
-p { line-height: 1.6; margin-bottom: 15px; }
-
-button {
-  border: none;
-  padding: 12px 20px;
-  border-radius: 30px;
-  background: white;
-  color: #ff5e8a;
-  font-size: 15px;
-  cursor: pointer;
-  margin: 5px;
-}
-
-input {
-  padding: 10px;
-  border-radius: 20px;
-  border: none;
-  width: 80%;
-  margin-bottom: 10px;
-  text-align: center;
-}
-
-.heart {
-  position: fixed;
-  bottom: -20px;
+/* floating hearts */
+.heart{
+  position:absolute;
+  font-size:18px;
+  opacity:.7;
   animation: float 6s linear infinite;
 }
 
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(20px); }
-  to { opacity: 1; transform: translateY(0); }
+@keyframes float{
+  0%{transform:translateY(110vh);opacity:0}
+  20%{opacity:1}
+  100%{transform:translateY(-10vh);opacity:0}
 }
 
-@keyframes float {
-  to {
-    transform: translateY(-110vh) scale(1.5);
-    opacity: 0;
-  }
+.card{
+  width:90%;
+  max-width:420px;
+  padding:30px;
+  border-radius:28px;
+  background: rgba(255,255,255,0.3);
+  backdrop-filter: blur(15px);
+  box-shadow:0 25px 50px rgba(0,0,0,.25);
+  text-align:center;
+}
+
+h1{
+  color:#ff1f6d;
+  margin-bottom:15px;
+}
+
+.text{
+  min-height:130px;
+  font-size:15px;
+  line-height:1.9;
+  color:#5b1c35;
+}
+
+.progress{
+  width:100%;
+  height:8px;
+  background:rgba(255,255,255,.5);
+  border-radius:10px;
+  margin:15px 0;
+}
+
+.bar{
+  height:100%;
+  width:0%;
+  background:#ff1f6d;
+  border-radius:10px;
+  transition:.5s;
+}
+
+.buttons{
+  display:flex;
+  gap:10px;
+  justify-content:center;
+  flex-wrap:wrap;
+  margin-top:15px;
+}
+
+button{
+  padding:10px 22px;
+  border:none;
+  border-radius:25px;
+  background:#ff1f6d;
+  color:white;
+  cursor:pointer;
+  font-size:14px;
+  transition:.3s;
+}
+
+button:hover{
+  transform:scale(1.07);
+  background:#ff0055;
+}
+
+.hidden{
+  display:none;
+}
+
+.password input{
+  width:100%;
+  padding:12px;
+  border:none;
+  border-radius:20px;
+  outline:none;
+  text-align:center;
+  font-size:15px;
+}
+
+.footer{
+  font-size:12px;
+  margin-top:15px;
+  opacity:.8;
 }
 </style>
 </head>
 
 <body>
 
-<!-- AUDIO (TIDAK AUTOPAUSE) -->
-<audio id="bgMusic">
-  <source src="penjaga hati.mp3" type="audio/mpeg">
-</audio>
+<!-- hearts generator -->
+<script>
+for(let i=0;i<25;i++){
+  let h=document.createElement("div");
+  h.className="heart";
+  h.innerHTML="💖";
+  h.style.left=Math.random()*100+"vw";
+  h.style.animationDuration=(3+Math.random()*5)+"s";
+  document.body.appendChild(h);
+}
+</script>
 
-<!-- LOGIN -->
-<div class="card" id="login">
-  <h1>🔐 Pesan Khusus</h1>
-  <p>Masukkan kata sederhana kita 🤍</p>
-  <input type="password" id="pass" placeholder="Contoh: KITA">
-  <br>
-  <button onclick="checkPass()">Buka</button>
+<div class="card" id="lock">
+  <h1>Kode Rahasia 💗</h1>
+  <div class="password">
+    <input type="password" id="pass" placeholder="tanggal jadian / kata sayang">
+  </div>
+  <div class="buttons">
+    <button onclick="unlock()">Buka 💌</button>
+  </div>
 </div>
 
-<!-- OPENING -->
-<div class="card hidden" id="opening">
-  <h1 id="greeting"></h1>
-  <p id="songName">🎵 Lagu: Penjaga Hati</p>
-  <p>
-    Aku bikin halaman kecil ini  
-    bukan buat hal besar,  
-    tapi buat satu hal sederhana.
-  </p>
-  <p><b>Mengucapkan terima kasih 🤍</b></p>
+<div class="card hidden" id="main">
+  <h1>Hai Kamu 💕</h1>
+  <div class="text" id="text"></div>
 
-  <button onclick="openGift()">Baca Pesan</button>
-  <br>
-  <button onclick="toggleMusic()" id="musicBtn">🎵 Putar Lagu</button>
-  <br>
-  <button onclick="toggleMode()">🌙 / ☀️</button>
-</div>
-
-<!-- GIFT -->
-<div class="card hidden" id="gift">
-  <h1>🤍 Terima Kasih 🤍</h1>
-
-  <p id="typing"></p>
-  <p id="countdown"></p>
-
-  <div class="card">
-    <h2>💌 Untuk Kamu</h2>
-    <p>
-      Terima kasih sudah bertahan,  
-      sudah sabar, dan tetap ada.  
-      Aku mungkin belum selalu sempurna,  
-      tapi aku sungguh menghargai kamu.
-    </p>
+  <div class="progress">
+    <div class="bar" id="bar"></div>
   </div>
 
-  <p>🤍🤍🤍</p>
-  <button onclick="toggleMusic()" id="musicBtn2">🎵 Putar Lagu</button>
+  <div class="buttons">
+    <button onclick="prev()">⬅</button>
+    <button onclick="next()">➡</button>
+    <button onclick="music()">🎵</button>
+  </div>
+
+  <div class="footer">aku nulis ini pakai perasaan 🤍</div>
 </div>
 
+<audio id="audio" loop>
+  <source src="lagu.mp3" type="audio/mpeg">
+</audio>
+
 <script>
-// PASSWORD
-function checkPass() {
-  const pass = document.getElementById("pass").value;
-  if (pass === "KITA") {
-    document.getElementById("login").classList.add("hidden");
-    document.getElementById("opening").classList.remove("hidden");
-  } else {
-    alert("Belum tepat 🤍");
-  }
-}
+const kode = "sayang"; // PASSWORD TETAP
 
-// OPEN MESSAGE (TIDAK SENTUH MUSIK)
-function openGift() {
-  document.getElementById("opening").classList.add("hidden");
-  document.getElementById("gift").classList.remove("hidden");
-  hearts();
-  typingEffect();
-}
-
-// HEART FLOAT
-function hearts() {
-  setInterval(() => {
-    const h = document.createElement("div");
-    h.className = "heart";
-    h.innerHTML = "🤍";
-    h.style.left = Math.random() * 100 + "vw";
-    h.style.fontSize = (Math.random() * 20 + 15) + "px";
-    document.body.appendChild(h);
-    setTimeout(() => h.remove(), 6000);
-  }, 400);
-}
-
-// TYPING EFFECT
-const text =
-"Terima kasih sudah hadir di hidup aku. " +
-"Terima kasih untuk waktu, perhatian, dan usaha kecil " +
-"yang mungkin sering tidak kamu sadari. " +
-"Aku benar-benar bersyukur punya kamu 🤍";
-
-let i = 0;
-function typingEffect() {
-  if (i < text.length) {
-    document.getElementById("typing").innerHTML += text.charAt(i);
-    i++;
-    setTimeout(typingEffect, 65);
-  }
-}
-
-// COUNTDOWN
-setInterval(() => {
-  const now = new Date();
-  const days = Math.floor((now - startDate) / (1000 * 60 * 60 * 24));
-  document.getElementById("countdown").innerText =
-    "Terima kasih sudah menemani aku selama " + days + " hari 🤍";
-}, 1000);
-
-// GREETING
-const hour = new Date().getHours();
-let greet = "Hai Sayang 🤍";
-if (hour < 12) greet = "Selamat pagi 🤍";
-else if (hour < 18) greet = "Selamat sore 🤍";
-else greet = "Selamat malam 🤍";
-document.getElementById("greeting").innerText = greet;
-
-// DARK MODE
-function toggleMode() {
-  document.body.classList.toggle("dark");
-}
-
-// MUSIC CONTROLLER (AMAN PINDAH HALAMAN)
-let isPlaying = false;
-function toggleMusic() {
-  const music = document.getElementById("bgMusic");
-  const btn1 = document.getElementById("musicBtn");
-  const btn2 = document.getElementById("musicBtn2");
-
-  if (!isPlaying) {
-    music.play();
-    isPlaying = true;
-    if (btn1) btn1.innerText = "⏸️ Pause Lagu";
-    if (btn2) btn2.innerText = "⏸️ Pause Lagu";
-  } else {
-    music.pause();
-    isPlaying = false;
-    if (btn1) btn1.innerText = "🎵 Putar Lagu";
-    if (btn2) btn2.innerText = "🎵 Putar Lagu";
-  }
-}
-
-// POPUP RANDOM
-const messages = [
-  "Terima kasih sudah bertahan 🤍",
-  "Aku menghargai kamu",
-  "Makasih sudah selalu ada",
-  "Aku bersyukur punya kamu 🤍"
+/* ===== KALIMAT SUDAH DIGANTI (VERSI PANJANG) ===== */
+const pages = [
+"Terima kasih karena kamu sudah begitu sabar menghadapi aku, dengan segala sifat cemburuku, emosiku, egoku, dan sikapku yang kadang berlebihan. Aku tahu tidak mudah berada di posisi kamu, tapi kamu tetap memilih bertahan dan tidak pergi meninggalkan aku.",
+"Aku sadar aku bukan orang yang sempurna. Aku masih sering salah, masih sering membuat kamu capek, dan kadang menyakiti lewat sikap atau kata-kataku tanpa sadar. Tapi satu hal yang ingin kamu tahu, aku selalu berusaha berubah dan belajar jadi lebih baik karena aku benar-benar tidak ingin kehilangan kamu.",
+"Aku sangat menghargai semua pengertian, kesabaran, dan usaha kamu selama ini. Kamu mengajarkanku arti mencintai dengan tulus, bertahan di saat sulit, dan menerima kekurangan tanpa harus menyerah.",
+"Ke depannya, aku harap kamu masih mau terus sama aku, berjalan bareng aku, menggenggam tanganku di saat aku lemah, dan mengingatkanku saat aku salah. Aku ingin tumbuh bersama kamu, memperbaiki diri bersama kamu, dan membangun masa depan bersama kamu.",
+"Aku sayang kamu 💖 Terima kasih sudah hadir dalam hidup aku, tetap bertahan, dan mencintai aku apa adanya. Aku berharap kamu tetap memilih aku, seperti aku yang selalu memilih kamu."
 ];
 
-setInterval(() => {
-  alert(messages[Math.floor(Math.random() * messages.length)]);
-}, 30000);
+let page=0,i=0;
+const speed=35;
+const text=document.getElementById("text");
+const bar=document.getElementById("bar");
+
+function type(){
+  if(i<pages[page].length){
+    text.innerHTML+=pages[page].charAt(i);
+    i++;
+    setTimeout(type,speed);
+  }
+}
+
+function load(){
+  text.innerHTML="";
+  i=0;
+  bar.style.width=((page+1)/pages.length*100)+"%";
+  type();
+}
+
+function next(){
+  if(page<pages.length-1){
+    page++;
+    load();
+  }else{
+    confetti();
+  }
+}
+
+function prev(){
+  if(page>0){
+    page--;
+    load();
+  }
+}
+
+load();
+
+const audio=document.getElementById("audio");
+let play=false;
+function music(){
+  play ? audio.pause() : audio.play();
+  play=!play;
+}
+
+function unlock(){
+  if(document.getElementById("pass").value===kode){
+    document.getElementById("lock").classList.add("hidden");
+    document.getElementById("main").classList.remove("hidden");
+  }else{
+    alert("Kode salah 😣");
+  }
+}
+
+/* confetti */
+function confetti(){
+  for(let i=0;i<40;i++){
+    let c=document.createElement("div");
+    c.innerHTML="💗";
+    c.style.position="absolute";
+    c.style.left=Math.random()*100+"vw";
+    c.style.top="-20px";
+    c.style.fontSize="22px";
+    c.style.animation="float 4s linear";
+    document.body.appendChild(c);
+    setTimeout(()=>c.remove(),4000);
+  }
+}
 </script>
 
 </body>
-    </html>
+</html>
